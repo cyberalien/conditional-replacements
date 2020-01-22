@@ -48,12 +48,12 @@ export class Replacements {
 	 */
 	getCommentReplacement(code: string): string | null {
 		const parts = code.split(':');
-		if (parts.length !== 2 || parts.shift() !== this.keyword) {
+		if (parts.length < 2 || parts.shift() !== this.keyword) {
 			return null;
 		}
 
 		// Get value, remove quotes
-		let value = (parts.shift() as string).trim();
+		let value = (parts.join(':') as string).trim();
 		if (
 			(value.slice(0, 1) === '"' && value.slice(-1) === '"') ||
 			(value.slice(0, 1) === "'" && value.slice(-1) === "'")

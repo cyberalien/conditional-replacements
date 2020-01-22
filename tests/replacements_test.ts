@@ -8,6 +8,7 @@ describe('Testing replacements', () => {
 		const replacements = new Replacements(
 			{
 				'/foo/': '/bar/',
+				'foo: 20': 'foo: 30',
 			},
 			'@iconify-replacement'
 		);
@@ -18,8 +19,12 @@ describe('Testing replacements', () => {
 		const expected = "import { Test1 } from '/bar/test1';";
 		expect(replacements.parse(code)).to.be.equal(expected);
 
+		// Full string
+		let tests = getSourceAndExpectedFixtures('var');
+		expect(replacements.parse(tests.source)).to.be.equal(tests.expected);
+
 		// Test more complex code
-		let tests = getSourceAndExpectedFixtures('paths');
+		tests = getSourceAndExpectedFixtures('paths');
 		expect(replacements.parse(tests.source)).to.be.equal(tests.expected);
 
 		// Test multiple replacements
